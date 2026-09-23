@@ -1,0 +1,12 @@
+"use client"
+
+import { ChevronLeft, FileText, MapPin } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Link } from '../components/common/Link'
+import { useParams } from 'next/navigation'
+import { PageHeading, Panel, StatusBadge } from '../components/common/ui'
+import { api } from '../services/api'
+import type { EmergencyReport } from '../types'
+import { dateTime } from '../utils/format'
+
+export function ReportDetails() { const { id = '' } = useParams<{ id: string }>(); const [report, setReport] = useState<EmergencyReport>(); useEffect(() => { void api.getReport(id).then(setReport) }, [id]); if (!report) return <main className="page"><Link className="linkish" to="/reports"><ChevronLeft size={14} /> Reports</Link><div className="loading">Loading source report…</div></main>; return <main className="page"><Link className="linkish" to="/reports"><ChevronLeft size={14} /> Reports</Link><PageHeading eyebrow="Source report" title={report.id} description="Original reporting is preserved independently from the information extraction process." action={<StatusBadge status={report.status} />} /><div className="detail-grid"><div className="section-stack"><Panel title="Original report"><div className="panel-body"><FileText color="#63d7ce" size={22} /><p style={{ fontSize: 18, lineHeight: 1.55, margin: '14px 0 4px' }}>“{report.text}”</p></div></Panel><Panel title="Extracted information"><div className="overview"><div className="overview-item"><span>Incident type</span><b>{report.extracted.incidentType}</b></div><div className="overview-item"><span>Location</span><b>{report.extracted.location}</b></div><div className="overview-item"><span>Severity indicators</span><b>{report.extracted.indicators.join(', ')}</b></div></div></Panel></div><aside className="section-stack"><Panel title="Report metadata"><div className="panel-body fact-list"><div><span className="muted">Source</span><br /><b>{report.source}</b></div><div><span className="muted">Reported time</span><br /><b>{dateTime(report.timestamp)}</b></div><div><span className="muted">Location</span><br /><MapPin size={13} /> <b>{report.location.name}</b></div><div><span className="muted">Priority</span><br /><b>{report.priority}</b></div><div><span className="muted">Related incident</span><br />{report.incidentId ? <Link className="linkish" to={`/incidents/${report.incidentId}`}>{report.incidentId}</Link> : 'Not assigned'}</div></div></Panel></aside></div></main> }

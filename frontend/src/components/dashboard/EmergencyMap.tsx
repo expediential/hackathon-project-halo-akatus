@@ -1,0 +1,5 @@
+import Link from 'next/link'
+import type { Incident } from '../../types'
+
+const positions = [[42, 47], [66, 30], [22, 67], [72, 72]]
+export function EmergencyMap({ incidents }: { incidents: Incident[] }) { return <div className="map" role="img" aria-label="Operational map showing incident locations, a safe evacuation route, and blocked road"><div className="map-road" /><div className="map-route" title="Evacuation route" /><div className="map-block" title="Blocked route" /><div className="map-legend"><span>— — Evacuation route</span><span style={{ color: '#e67967' }}>━ Blocked road</span></div>{incidents.map((incident, index) => { const [top, left] = positions[index] ?? [50, 50]; return <Link key={incident.incident_id} href={`/incidents/${incident.incident_id}`} className={`map-marker ${incident.severity.toLowerCase()}`} style={{ top: `${top}%`, left: `${left}%` }} aria-label={`View ${incident.type} at ${incident.location.name}`}><span className="map-label" style={{ transform: 'rotate(45deg) translate(12px, -2px)' }}>{incident.type} · {incident.location.name}</span></Link> })}</div> }

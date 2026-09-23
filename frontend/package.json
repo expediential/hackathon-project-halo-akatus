@@ -1,0 +1,31 @@
+{
+  "name": "emergency-response-intelligence",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node ./node_modules/next/dist/bin/next dev",
+    "build": "node ./node_modules/next/dist/bin/next build",
+    "start": "node ./node_modules/next/dist/bin/next start",
+    "lint": "node ./node_modules/eslint/bin/eslint.js .",
+    "preview": "node ./node_modules/next/dist/bin/next start"
+  },
+  "dependencies": {
+    "lucide-react": "latest",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwindcss": "latest"
+  },
+  "devDependencies": {
+    "@eslint/js": "latest",
+    "@types/node": "26.6.2",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "eslint-plugin-react-hooks": "latest",
+    "typescript": "latest",
+    "typescript-eslint": "latest"
+  }
+}
